@@ -1,0 +1,2 @@
+# kbsession
+Katabole session storage
