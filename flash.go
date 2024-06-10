@@ -18,7 +18,7 @@ const flashKey = "_flash_"
 // It's common to use keys like "success", "info", "warning", and "error" which map to CSS classes.
 // Value is the string to be displayed.
 func AddFlash(r *http.Request, key, value string) {
-	s := Session(r)
+	s := Get(r)
 	if flashMap, ok := s.Values[flashKey]; ok && flashMap != nil {
 		flashMap := flashMap.(map[string][]string)
 		flashMap[key] = append(flashMap[key], value)
@@ -29,7 +29,7 @@ func AddFlash(r *http.Request, key, value string) {
 
 // Flash grabs the flash messages from the session and removes them so they'll only be rendered once.
 func Flash(r *http.Request) map[string][]string {
-	s := Session(r)
+	s := Get(r)
 	if flashMap, ok := s.Values[flashKey]; ok && flashMap != nil {
 		delete(s.Values, flashKey)
 		return flashMap.(map[string][]string)
