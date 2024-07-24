@@ -29,10 +29,12 @@ func (sh *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	sh.next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), sessionKey, session)))
 }
 
-// NewHandler decodes the session from the request and adds it to the request context, guaranteeing it'll be
-// there and making gorilla/sessions easier to work with.
-func NewHandler(sessionStore sessions.Store, next http.Handler) http.Handler {
-	return &Handler{sessionStore: sessionStore, next: next}
+// NewMiddleware returns middleware that decodes the session from the request and adds it to the request context,
+// guaranteeing it'll be there and making gorilla/sessions easier to work with.
+func NewMiddleware(sessionStore sessions.Store) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return &Handler{sessionStore: sessionStore, next: next}
+	}
 }
 
 // Get returns the session from the request context.
