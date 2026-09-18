@@ -1,7 +1,7 @@
 module github.com/katabole/kbsession
 
-go 1.22.3
+go 1.23
 
-require github.com/gorilla/sessions v1.2.2
+require github.com/gorilla/sessions v1.4.0
 
 require github.com/gorilla/securecookie v1.1.2 // indirect
